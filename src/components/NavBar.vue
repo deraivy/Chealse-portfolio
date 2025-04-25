@@ -50,19 +50,45 @@
     ></div>
 
     <!-- Mobile Menu Drawer -->
+    <!-- Mobile Menu Overlay -->
     <div
       v-if="isMenuOpen"
-      class="fixed top-0 right-0 w-64 h-full bg-gray-900 shadow-lg p-6 z-50 transform transition-transform duration-300"
-      :class="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
+      class="fixed inset-0 bg-black bg-opacity-90 z-40 transition-opacity duration-300"
+      :class="isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+      @click="toggleMenu"
+    ></div>
+
+    <!-- Mobile Menu Drawer -->
+    <div
+      v-if="isMenuOpen"
+      class="fixed inset-x-0 top-0 h-full bg-gradient-to-b from-gray-900 to-black z-50 transition-transform duration-300 overflow-y-auto"
+      :class="isMenuOpen ? 'translate-y-0' : '-translate-y-full'"
     >
-      <button @click="toggleMenu" class="text-white absolute top-4 right-4">
-        <X size="24" />
+      <!-- Close Button -->
+      <button
+        @click="toggleMenu"
+        class="absolute top-4 right-4 p-3 rounded-full bg-emerald-600 hover:bg-emerald-700 transition-all duration-300 z-60"
+        data-aos="zoom-in"
+        data-aos-delay="100"
+      >
+        <X size="28" class="text-white" />
       </button>
-      <ul class="mt-10 space-y-6">
-        <li v-for="link in navLinks" :key="link">
+
+      <!-- Navigation Links -->
+      <ul
+        class="flex flex-col items-center justify-center h-full space-y-8"
+        data-aos="fade-up"
+        data-aos-delay="200"
+      >
+        <li
+          v-for="(link, index) in navLinks"
+          :key="link"
+          data-aos="fade-up"
+          :data-aos-delay="300 + index * 100"
+        >
           <a
             href="#"
-            class="block text-lg font-medium text-white hover:text-emerald-500 transition-colors duration-300"
+            class="block text-2xl font-semibold text-white hover:text-emerald-500 transition-colors duration-300 transform hover:scale-105"
             @click="toggleMenu"
           >
             {{ link }}
